@@ -1,1 +1,1 @@
-docker exec -i mysql-container mysql -uroot -proot shop < ./catalogue/database.sql
+docker exec -i mysql-container mysql -uroot -pasdf1234 shop < ./catalogue/database.sql
