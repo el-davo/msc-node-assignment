@@ -11,23 +11,66 @@ var headers = [
 
 
 var db = mysql.createConnection({
-    host:     'localhost',
-    user:     'root',
+    host: 'localhost',
+    user: 'root',
     password: 'asdf1234',
     database: 'shop'
 });
 var cart = [];
-var theuser=null;
-var theuserid =null;
+var theuser = null;
+var theuserid = null;
 var server = http.createServer(function (request, response) {
     var path = url.parse(request.url).pathname;
     var url1 = url.parse(request.url);
     if (request.method == 'POST') {
         switch (path) {
-
-
             /* TODO */
             case "/newProduct":
+                response.writeHead(200, {
+                    'Content-Type': 'text/html',
+                    'Access-Control-Allow-Origin': '*'
+                });
+
+                var body = '';
+                request.on('data', function (data) {
+                    body += data;
+                });
+                request.on('end', function () {
+                    console.log(body);
+                    var product = qs.parse(body);
+                    console.log('new Product');
+                    console.log(JSON.stringify(product, null, 2));
+
+                    var query = "INSERT INTO products (name, quantity, price, image) VALUES (?, ?, ?, ?)";
+
+                    db.query(
+                        query,
+                        [
+                            product.name,
+                            product.quantity,
+                            product.price,
+                            product.image
+                        ],
+                        function (err, row) {
+                            if (err) throw err;
+
+                            var query = "SELECT * FROM products WHERE productID=?";
+                            db.query(
+                                query,
+                                [
+                                    row.insertId
+                                ],
+                                function (err, rows) {
+                                    if (err) throw err;
+
+                                    console.log(JSON.stringify(rows, null, 2));
+                                    response.end(JSON.stringify(rows[0]));
+                                    console.log("Product created");
+                                }
+                            );
+                        }
+                    );
+                });
 
 
                 break;
@@ -49,7 +92,7 @@ var server = http.createServer(function (request, response) {
                 db.query(
                     query,
                     [],
-                    function(err, rows) {
+                    function (err, rows) {
                         if (err) throw err;
                         console.log(JSON.stringify(rows, null, 2));
                         response.end(JSON.stringify(rows));
@@ -60,7 +103,7 @@ var server = http.createServer(function (request, response) {
                 break;
             case "/getProduct"    :
                 console.log("getProduct");
-                var body="";
+                var body = "";
                 request.on('data', function (data) {
                     body += data;
                 });
@@ -72,14 +115,14 @@ var server = http.createServer(function (request, response) {
                         'Access-Control-Allow-Origin': '*'
                     });
                     console.log(JSON.stringify(product, null, 2));
-                    var query = "SELECT * FROM products where productID="+
+                    var query = "SELECT * FROM products where productID=" +
                         product.id;
 
 
                     db.query(
                         query,
                         [],
-                        function(err, rows) {
+                        function (err, rows) {
                             if (err) throw err;
                             console.log(JSON.stringify(rows, null, 2));
                             response.end(JSON.stringify(rows[0]));
@@ -90,15 +133,11 @@ var server = http.createServer(function (request, response) {
                 });
 
 
-
                 break;
-
-
 
 
         }
     }
-
 
 
 });

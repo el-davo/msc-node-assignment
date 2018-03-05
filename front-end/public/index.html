@@ -307,7 +307,7 @@
                         fd,
                         function (data) {
                             console.log(data);
-                            $('#logonmessage').html(data);
+                            getProducts();
                         }
                 );
 
@@ -391,6 +391,15 @@
 
                 Name:<br>
                 <input type="text" name="name" value="">
+                <br>
+                Quantity:<br>
+                <input type="text" name="quantity" value="">
+                <br>
+                Price:<br>
+                <input type="text" name="price" value="">
+                <br>
+                Image:<br>
+                <input type="text" name="image" value="">
                 <br>
 
                 <input type="submit">

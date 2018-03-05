@@ -1,0 +1,22 @@
+{
+  "name": "msc-node-assignment",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "concurrently --kill-others \"cd cart && node app.js\" \"cd catalogue && node app.js\" \"cd front-end && node server.js\" \"cd users && node app.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/el-davo/msc-node-assignment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/el-davo/msc-node-assignment/issues"
+  },
+  "homepage": "https://github.com/el-davo/msc-node-assignment#readme",
+  "devDependencies": {
+    "concurrently": "^3.5.1"
+  }
+}

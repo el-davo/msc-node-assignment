@@ -22,6 +22,7 @@ app.use(morgan("dev", {}));
 app.use(express.static("public"));
 app.use(session(config.session));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helpers.mylogger);
 app.use(cookieParser());
 app.use(helpers.errorHandler);
