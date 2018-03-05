@@ -1,0 +1,5 @@
+cart/node_modules/
+catalogue/node_modules
+front-end/node_modules
+users/node_modules
+.idea/
