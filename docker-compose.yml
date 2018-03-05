@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  db:
+    image: mysql:latest
+    container_name: mysql-container
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data
+      - catalogue/database.sql
+    environment:
+      MYSQL_DATABASE: "shop"
+      MYSQL_USER: "username"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    ports:
+      - 8001:80
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_USERNAME: username
+      MYSQL_ROOT_PASSWORD: password
+
+volumes:
+  db:
+  yarn:
