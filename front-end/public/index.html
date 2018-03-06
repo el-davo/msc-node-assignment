@@ -152,13 +152,13 @@
         }
 
         function deleteCartItem(count) {
-            $.post(
-                    "/delete",
-                    {cnt: count},
-                    function (data) {
-
-                    }
-            );
+            $.ajax({
+                url: "cart/" + count,
+                type: "DELETE",
+                success: function (data) {
+                    getCart();
+                }
+            });
 
         }
 
@@ -207,7 +207,7 @@
                 out += '<td>' + cart[i].price + '</td>';
                 out += '<td> <img src="';
                 out += "images/" + cart[i].image + '" style="width:104px;height:100px;">';
-                out += '<td> <button onclick="deleteCartItem(' + cart[i].cartid;
+                out += '<td> <button onclick="deleteCartItem(' + cart[i].productID;
                 out1 = ")" + '">Delete</button></td>';
                 out += out1;
                 out += '<td>' + cart[i].quantity + '</td>';
