@@ -47,7 +47,7 @@ var server = http.createServer(function (request, response) {
                         query,
                         [
                             product.name,
-                            product.quantity,
+                            1,
                             product.price,
                             product.image
                         ],
