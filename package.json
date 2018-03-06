@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "concurrently --kill-others \"cd cart && node app.js\" \"cd catalogue && node app.js\" \"cd front-end && node server.js\" \"cd users && node app.js\""
+    "start": "setup.bat && concurrently --kill-others \"cd cart && node app.js\" \"cd catalogue && node app.js\" \"cd front-end && node server.js\" \"cd users && node app.js\"",
+    "update": "cd cart && npm i && cd ../catalogue && npm i && cd ../front-end && npm i && cd ../users && npm i"
   },
   "repository": {
     "type": "git",

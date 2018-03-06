@@ -64,15 +64,21 @@ app.post("/add", function (req, res, next) {
 
 /* toDO */
 app.delete("/cart/:custId/items/:id", function (req, res, next) {
-    var body = '';
-    console.log("Delete item from cart: for custId " + req.url + ' ' +
+    var custId = req.params.custId;
+
+    console.log("Delete item from cart: for custId " + custId + ' ' +
         req.params.id.toString());
     console.log("delete ");
 
+    var index = _.findIndex(cart[custId], {productID: parseInt(req.params.id)});
+    if (index !== -1) {
+        _.remove(cart[custId], function (object, i) {
+            return i === index;
+        });
+    }
 
-    res.send(' ');
-
-
+    res.status(201);
+    res.send("");
 });
 
 
