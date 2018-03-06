@@ -2,7 +2,7 @@ var express = require("express")
     , morgan = require("morgan")
     , path = require("path")
     , bodyParser = require("body-parser")
-
+    , _ = require('lodash')
     , app = express();
 
 
@@ -40,7 +40,20 @@ app.post("/add", function (req, res, next) {
         "quantity": obj.quantity
     };
     console.log(JSON.stringify(data));
-    c.push(data);
+
+    /**
+     * Combine results to make sure the user cant add the same product twice.
+     *
+     * If the user adds the same product we will increase the quantity instead
+     */
+    var isProductAlreadyInCart = _.find(c, {productID: obj.productID});
+
+    if (isProductAlreadyInCart) {
+        var index = _.findIndex(c, {productID: obj.productID});
+        c[index].quantity = parseInt(c[index].quantity) + parseInt(obj.quantity);
+    } else {
+        c.push(data);
+    }
 
     res.status(201);
 
@@ -55,9 +68,6 @@ app.delete("/cart/:custId/items/:id", function (req, res, next) {
     console.log("Delete item from cart: for custId " + req.url + ' ' +
         req.params.id.toString());
     console.log("delete ");
-
-
-
 
 
     res.send(' ');
