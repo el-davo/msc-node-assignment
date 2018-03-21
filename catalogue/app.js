@@ -4,6 +4,7 @@ var http = require('http'),
 var p = require('path');
 var qs = require('querystring');
 var mysql = require('mysql');
+var _ = require('lodash');
 var root = __dirname;
 var headers = [
     "Product Name", "Price", "Picture", "Buy Button"
@@ -42,6 +43,24 @@ var server = http.createServer(function (request, response) {
                     console.log(JSON.stringify(product, null, 2));
 
                     var query = "INSERT INTO products (name, quantity, price, image) VALUES (?, ?, ?, ?)";
+
+                    // Validate name
+                    if (!product.name || product.name.length === 0) {
+                        console.log('Invalid name');
+                        return response.end();
+                    }
+
+                    // Validate price
+                    if (!product.price || isNaN(product.price)) {
+                        console.log('Invalid price');
+                        return response.end();
+                    }
+
+                    // Validate image
+                    if (!product.image || product.image.length === 0) {
+                        console.log('Invalid image');
+                        return response.end();
+                    }
 
                     db.query(
                         query,
